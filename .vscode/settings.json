@@ -1,12 +1,17 @@
 {
   "cSpell.words": [
+    "africa",
+    "america",
+    "asia",
     "dateutil",
     "django",
     "djangorestframework",
     "dotenv",
+    "europe",
     "feedparser",
     "gunicorn",
     "initdb",
+    "Jazeera",
     "knox",
     "postgres",
     "postgresql",

@@ -1,0 +1,20 @@
+[
+  {
+    "model": "feeds.source",
+    "pk": 1,
+    "fields": {
+      "name": "Source example",
+      "url": "url example",
+      "region": null
+    }
+  },
+  {
+    "model": "feeds.source",
+    "pk": 2,
+    "fields": {
+      "name": "Source example 2",
+      "url": "url example 2",
+      "region": "middle_east"
+    }
+  }
+]
