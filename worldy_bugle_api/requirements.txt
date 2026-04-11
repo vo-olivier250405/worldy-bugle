@@ -22,6 +22,12 @@ requests
 python-dateutil
 drf-yasg
 feedparser
+setuptools
+wheel
+spacy
+pycountry
+pycountry-convert
+
 
 # Production
 gunicorn
