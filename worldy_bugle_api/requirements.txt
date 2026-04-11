@@ -1,0 +1,43 @@
+# Core Django
+Django
+djangorestframework
+
+# Database
+psycopg2-binary
+dj-database-url
+redis
+
+# Environment & Configuration
+python-dotenv==1.0.1
+
+# Authentication & Permissions
+django-cors-headers
+django-rest-knox
+
+# Serialization & Validation
+django-filter
+
+# Utilities
+requests
+python-dateutil
+drf-yasg
+feedparser
+
+# Production
+gunicorn
+
+# Security
+cryptography
+
+# Testing
+django-silk
+pytest
+pytest-django
+bandit
+
+# Audit
+pip-audit
+safety
+
+# Queue and Task Management
+celery

@@ -1,0 +1,19 @@
+{
+  "cSpell.words": [
+    "dateutil",
+    "django",
+    "djangorestframework",
+    "dotenv",
+    "feedparser",
+    "gunicorn",
+    "initdb",
+    "knox",
+    "postgres",
+    "postgresql",
+    "psycopg",
+    "pytest",
+    "runserver",
+    "worldy",
+    "yasg"
+  ]
+}
