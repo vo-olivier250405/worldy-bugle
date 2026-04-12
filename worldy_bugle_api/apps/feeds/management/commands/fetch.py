@@ -15,7 +15,7 @@ class Command(BaseCommand):
         source = Source.objects.first()
         fetcher = Fetcher(source)
         detector = DetectorUtils(source)
-        entries = fetcher.get_entries()
+        entries = fetcher.get_new_entries()
 
         self.stdout.write(f"Fetched {len(entries)} entries")
 
@@ -26,16 +26,13 @@ class Command(BaseCommand):
             self.stdout.write(f"\nProcessing entry: {entry.get('title', '')}")
             self.stdout.write(f"Detected country codes: {codes_names}")
 
-            article, created = Article.objects.get_or_create(
+            article = Article.objects.create(
                 title=entry.get("title", ""),
                 resume=entry.get("summary", ""),
                 url=entry.get("link", ""),
                 published_at=published_at,
                 source=source,
             )
-            if not created:
-                self.stdout.write(f"{article.title} skipped.")
-                continue
 
             code_to_set = []
             for code in codes_names:
