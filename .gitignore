@@ -210,3 +210,5 @@ docker/
 postgres-data/
 CLAUDE.md
 sources.json
+
+backups/
