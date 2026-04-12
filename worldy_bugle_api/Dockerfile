@@ -5,7 +5,7 @@ WORKDIR /app
 COPY ./requirements.txt /app/requirements.txt
 
 RUN pip install --no-cache-dir --upgrade -r /app/requirements.txt && \
-    python -m spacy download en_core_web_sm
+    python -m spacy download en_core_web_trf
 
 COPY . /app
 
