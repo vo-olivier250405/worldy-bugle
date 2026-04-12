@@ -9,10 +9,10 @@ app = Celery("config")
 app.config_from_object("django.conf:settings", namespace="CELERY")
 app.autodiscover_tasks()
 
-# Schedule the task to run every hour
+# Schedule the task to run every 5 minutes
 app.conf.beat_schedule = {
-    "fetch-new-articles-every-hour": {
+    "fetch-new-articles-every-5-minutes": {
         "task": "apps.feeds.tasks.fetch_new_articles",
-        "schedule": crontab(minute=0, hour="*"),
+        "schedule": crontab(minute="*/5"),
     },
 }

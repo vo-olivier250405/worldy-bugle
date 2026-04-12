@@ -19,6 +19,7 @@
     "nltk",
     "postgres",
     "postgresql",
+    "psql",
     "psycopg",
     "pycountry",
     "pytest",

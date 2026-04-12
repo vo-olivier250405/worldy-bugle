@@ -16,10 +16,13 @@ class Fetcher:
 
     def get_new_entries(self):
         entries = self.get_entries()
-        entries_urls = [e.get("url", "") for e in entries]
-        if not entries_urls:
+        if not entries:
             return []
+        entries_urls = [e.get("link", None) for e in entries]
 
         existing_articles = Article.objects.filter(url__in=entries_urls)
+        print(
+            f"Found {existing_articles.count()} existing articles for source {self.source.name}"
+        )
         existing_urls = set(existing_articles.values_list("url", flat=True))
-        return [e for e in entries if e.get("url", "") not in existing_urls]
+        return [e for e in entries if e.get("link", None) not in existing_urls]
