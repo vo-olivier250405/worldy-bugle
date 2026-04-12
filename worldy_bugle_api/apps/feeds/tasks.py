@@ -14,13 +14,14 @@ def fetch_new_articles():
     all_sources = Source.objects.all()
 
     for source in all_sources:
-        fetcher = Fetcher(source)
-        detector = DetectorUtils(source)
-        entries = fetcher.get_new_entries()
-        logging.info(f"Fetched {len(entries)} entries for source: {source.name}")
+        try:
+            errors_url = []
 
-        for entry in entries:
-            try:
+            fetcher = Fetcher(source)
+            detector = DetectorUtils(source)
+            entries = fetcher.get_new_entries()
+
+            for entry in entries:
                 codes_names = detector.detect_country(entry)
                 published_at = detector.detect_published_date(entry)
 
@@ -40,5 +41,12 @@ def fetch_new_articles():
                     codes_to_set.append(country)
 
                 article.countries.set(codes_to_set)
-            except Exception as e:
-                logging.error(str(e))
+
+        except Exception as e:
+            errors_url.append({"url": entry.get("link", ""), "error": e.__str__()})
+
+        if errors_url:
+            logging.error("\nErrors occurred for the following URLs: ")
+            for error in errors_url:
+                logging.error(f"URL: {error['url']} - Error: {error['error']}")
+        logging.info(f"Finished processing source: {source.name}")

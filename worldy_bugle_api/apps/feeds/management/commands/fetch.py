@@ -1,3 +1,5 @@
+from pprint import pprint
+
 from apps.articles.detector import DetectorUtils
 from apps.articles.models import Article, Country
 from apps.feeds.fetcher import Fetcher
@@ -9,20 +11,18 @@ class Command(BaseCommand):
     help = "Test the Fetcher class"
 
     def handle(self, *_args, **_kwargs):
-        Article.objects.all().delete()
-        Country.objects.all().delete()
+        # Article.objects.all().delete()
+        # Country.objects.all().delete()
 
         for source in Source.objects.all():
-            fetcher = Fetcher(source)
-            detector = DetectorUtils(source)
-            entries = fetcher.get_new_entries()
+            try:
+                errors_url = []
 
-            self.stdout.write(
-                f"Fetched {len(entries)} entries for source: {source.name}"
-            )
+                fetcher = Fetcher(source)
+                detector = DetectorUtils(source)
+                entries = fetcher.get_new_entries()
 
-            for entry in entries:
-                try:
+                for entry in entries:
                     codes_names = detector.detect_country(entry)
                     published_at = detector.detect_published_date(entry)
 
@@ -45,10 +45,11 @@ class Command(BaseCommand):
                         code_to_set.append(country)
 
                     article.countries.set(code_to_set)
-                except Exception as e:
-                    self.stdout.write(
-                        f"Error processing entry: {entry.get('title', '')}"
-                    )
-                    self.stdout.write(str(e))
+            except Exception as e:
+                errors_url.append({"url": entry.get("link", ""), "error": e.__str__()})
+
+            if errors_url:
+                self.stdout.write("\nErrors occurred for the following URLs:")
+                pprint(errors_url)
 
             self.stdout.write(f"Finished processing source: {source.name}")

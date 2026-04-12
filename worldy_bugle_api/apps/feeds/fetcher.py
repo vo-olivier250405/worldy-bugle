@@ -21,8 +21,9 @@ class Fetcher:
         entries_urls = [e.get("link", None) for e in entries]
 
         existing_articles = Article.objects.filter(url__in=entries_urls)
-        print(
-            f"Found {existing_articles.count()} existing articles for source {self.source.name}"
-        )
         existing_urls = set(existing_articles.values_list("url", flat=True))
-        return [e for e in entries if e.get("link", None) not in existing_urls]
+        new_entries = [e for e in entries if e.get("link", None) not in existing_urls]
+        print(f"\nTotal entries fetched: {len(entries)}")
+        print(f"Existing articles in DB with same URLs: {existing_articles.count()}")
+        print(f"New entries to be added: {len(new_entries)}")
+        return new_entries
