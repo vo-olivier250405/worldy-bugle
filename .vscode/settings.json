@@ -10,10 +10,13 @@
     "ents",
     "europe",
     "feedparser",
+    "geograpy",
     "gunicorn",
     "initdb",
     "Jazeera",
     "knox",
+    "mktime",
+    "nltk",
     "postgres",
     "postgresql",
     "psycopg",
@@ -23,6 +26,7 @@
     "setuptools",
     "spacy",
     "worldy",
+    "xpack",
     "yasg"
   ]
 }
