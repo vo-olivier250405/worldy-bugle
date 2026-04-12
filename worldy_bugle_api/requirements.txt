@@ -27,6 +27,8 @@ wheel
 spacy
 pycountry
 pycountry-convert
+geograpy3
+nltk
 
 
 # Production
