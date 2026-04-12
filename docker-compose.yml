@@ -14,6 +14,9 @@ services:
       - postgres
     networks:
       - app
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
 
   celery:
     container_name: worldy-bugle-celery
@@ -27,6 +30,25 @@ services:
       - ./worldy_bugle_api:/app
     depends_on:
       - postgres
+      - redis
+
+    networks:
+      - app
+    restart: unless-stopped
+
+  celery-beat:
+    container_name: worldy-bugle-celery-beat
+    build:
+      context: ./worldy_bugle_api
+      dockerfile: Dockerfile
+    command: celery -A config beat -l info
+    env_file:
+      - worldy_bugle_api/.env
+    volumes:
+      - ./worldy_bugle_api:/app
+    depends_on:
+      - postgres
+      - redis
     networks:
       - app
     restart: unless-stopped
@@ -41,6 +63,14 @@ services:
       - ./docker/postgres/init:/docker-entrypoint-initdb.d
     ports:
       - 5432:5432
+    networks:
+      - app
+
+  redis:
+    container_name: worldy-bugle-redis
+    image: redis:latest
+    ports:
+      - 6379:6379
     networks:
       - app
 

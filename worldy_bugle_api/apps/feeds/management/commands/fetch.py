@@ -9,36 +9,46 @@ class Command(BaseCommand):
     help = "Test the Fetcher class"
 
     def handle(self, *_args, **_kwargs):
-        # Article.objects.all().delete()
-        # Country.objects.all().delete()
+        Article.objects.all().delete()
+        Country.objects.all().delete()
 
-        source = Source.objects.first()
-        fetcher = Fetcher(source)
-        detector = DetectorUtils(source)
-        entries = fetcher.get_new_entries()
+        for source in Source.objects.all():
+            fetcher = Fetcher(source)
+            detector = DetectorUtils(source)
+            entries = fetcher.get_new_entries()
 
-        self.stdout.write(f"Fetched {len(entries)} entries")
-
-        for entry in entries:
-            codes_names = detector.detect_country(entry)
-            published_at = detector.detect_published_date(entry)
-
-            self.stdout.write(f"\nProcessing entry: {entry.get('title', '')}")
-            self.stdout.write(f"Detected country codes: {codes_names}")
-
-            article = Article.objects.create(
-                title=entry.get("title", ""),
-                resume=entry.get("summary", ""),
-                url=entry.get("link", ""),
-                published_at=published_at,
-                source=source,
+            self.stdout.write(
+                f"Fetched {len(entries)} entries for source: {source.name}"
             )
 
-            code_to_set = []
-            for code in codes_names:
-                country, _ = Country.objects.get_or_create(
-                    code=code["code"], defaults={"name": code["name"]}
-                )
-                code_to_set.append(country)
+            for entry in entries:
+                try:
+                    codes_names = detector.detect_country(entry)
+                    published_at = detector.detect_published_date(entry)
 
-            article.countries.set(code_to_set)
+                    # self.stdout.write(f"\nProcessing entry: {entry.get('title', '')}")
+                    # self.stdout.write(f"Detected country codes: {codes_names}")
+
+                    article = Article.objects.create(
+                        title=entry.get("title", ""),
+                        resume=entry.get("summary", ""),
+                        url=entry.get("link", ""),
+                        published_at=published_at,
+                        source=source,
+                    )
+
+                    code_to_set = []
+                    for code in codes_names:
+                        country, _ = Country.objects.get_or_create(
+                            code=code["code"], defaults={"name": code["name"]}
+                        )
+                        code_to_set.append(country)
+
+                    article.countries.set(code_to_set)
+                except Exception as e:
+                    self.stdout.write(
+                        f"Error processing entry: {entry.get('title', '')}"
+                    )
+                    self.stdout.write(str(e))
+
+            self.stdout.write(f"Finished processing source: {source.name}")
