@@ -10,6 +10,7 @@
     "ents",
     "europe",
     "feedparser",
+    "filterset",
     "geograpy",
     "gunicorn",
     "initdb",
@@ -28,6 +29,7 @@
     "runserver",
     "setuptools",
     "spacy",
+    "viewsets",
     "worldy",
     "xpack",
     "yasg"
