@@ -1,11 +1,11 @@
-from api.filters import ArticleFilter
-from api.permissions import ReadOnly
-from api.serializers import ArticleLiteSerializer, ArticleSerializer
-from api.views.pagination_view_set import BaseViewSetPagination
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import OrderingFilter, SearchFilter
 from rest_framework.viewsets import ModelViewSet
 
+from apps.api.filters import ArticleFilter
+from apps.api.permissions import ReadOnly
+from apps.api.serializers import ArticleLiteSerializer, ArticleSerializer
+from apps.api.views.pagination_view_set import BaseViewSetPagination
 from apps.articles.models import Article
 
 
