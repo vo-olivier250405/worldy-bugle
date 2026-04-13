@@ -4,8 +4,7 @@
     "pk": 1,
     "fields": {
       "name": "Source example",
-      "url": "url example",
-      "region": null
+      "url": "url example"
     }
   },
   {
@@ -13,8 +12,7 @@
     "pk": 2,
     "fields": {
       "name": "Source example 2",
-      "url": "url example 2",
-      "region": "middle_east"
+      "url": "url example 2"
     }
   }
 ]
