@@ -6,7 +6,7 @@ from apps.feeds.models import Source
 class SourceSerializer(ModelSerializer):
     class Meta:
         model = Source
-        fields = ["name", "url", "country_code"]
+        fields = ["name", "url"]
 
 
 class SourceLiteSerializer(ModelSerializer):
