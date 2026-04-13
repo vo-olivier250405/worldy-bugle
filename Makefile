@@ -6,7 +6,7 @@ API_CONTAINER_NAME ?= worldy-bugle-api
 BACKUP_DIR     := ./backups
 DB_NAME        := $(POSTGRES_DB)
 
-.PHONY: help backup_db clean_load_db load_sources makemigrations migrate
+.PHONY: help backup_db clean_load_db load_sources makemigrations migrate shell
 
 help:
 	@echo "Available commands:"
@@ -16,6 +16,7 @@ help:
 	@echo "  make load_sources                                                   - Load source data into the database"
 	@echo "  make makemigrations                                                   - Create new migrations based on model changes"
 	@echo "  make migrate                                                   - Apply database migrations"
+	@echo "  make shell                                                   - Open Django shell"
 	@echo ""
 	@echo "Examples:"
 	@echo "  make backup_db"
@@ -48,3 +49,6 @@ makemigrations:
 
 migrate:
 	docker exec -it "$(API_CONTAINER_NAME)" python3 manage.py migrate
+
+shell:
+	docker exec -it "$(API_CONTAINER_NAME)" python3 manage.py shell
