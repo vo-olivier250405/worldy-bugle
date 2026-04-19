@@ -1,0 +1,1 @@
+from .test_article_view_set import TestArticleViewSet

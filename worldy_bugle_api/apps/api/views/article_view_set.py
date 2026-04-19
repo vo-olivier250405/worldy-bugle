@@ -1,6 +1,6 @@
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import OrderingFilter, SearchFilter
-from rest_framework.viewsets import ModelViewSet
+from rest_framework.viewsets import ReadOnlyModelViewSet
 
 from apps.api.filters import ArticleFilter
 from apps.api.permissions import ReadOnly
@@ -9,7 +9,7 @@ from apps.api.views.pagination_view_set import BaseViewSetPagination
 from apps.articles.models import Article
 
 
-class ArticleViewSet(ModelViewSet):
+class ArticleViewSet(ReadOnlyModelViewSet):
     pagination_class = BaseViewSetPagination
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
     permission_classes = [ReadOnly]
@@ -30,12 +30,3 @@ class ArticleViewSet(ModelViewSet):
             .distinct()
         )
         return queryset
-
-    def perform_create(self, serializer):
-        raise NotImplementedError("This endpoint is read-only")
-
-    def perform_update(self, serializer):
-        raise NotImplementedError("This endpoint is read-only")
-
-    def perform_destroy(self, instance):
-        raise NotImplementedError("This endpoint is read-only")
