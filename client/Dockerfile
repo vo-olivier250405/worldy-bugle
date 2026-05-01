@@ -8,4 +8,4 @@ RUN npm install --no-cache
 
 EXPOSE 5175
 
-CMD ["npm", "run", "dev"]
+CMD ["node_modules/.bin/vite"]

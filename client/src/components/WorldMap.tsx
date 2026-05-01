@@ -1,8 +1,9 @@
 import type { FC } from "react";
 import worldData from "../assets/world.json";
 
-export interface WorldMapProps {
-  articleCounts: Record<string, number>;
+interface WorldMapProps {
+  selectedIso: string | null;
+  onCountryClick: (iso: string, name: string) => void;
 }
 
 const HEX_PX = 6.5;
@@ -27,22 +28,33 @@ function hexPoints(cx: number, cy: number, r: number) {
   }).join(" ");
 }
 
-const WorldMap: FC = () => {
+const WorldMap: FC<WorldMapProps> = ({ selectedIso, onCountryClick }) => {
   return (
-    <svg viewBox="...">
-      {worldData.map((country) =>
-        country.hexes.map(([col, row]) => {
-          const { x, y } = hexCenter(col, row);
-          return (
-            <polygon
-              key={`${country.iso_a3}-${col}-${row}`}
-              points={hexPoints(x, y, HEX_PX - 0.8)}
-              data-iso={country.iso_a3}
-              className="hex"
-            />
-          );
-        }),
-      )}
+    <svg
+      viewBox="0 0 1960 910"
+      preserveAspectRatio="xMidYMid meet"
+      style={{ width: "100%", height: "100%", minWidth: "600px" }}
+    >
+      {worldData.map((country) => (
+        <g
+          key={country.iso_a3}
+          className={`country-group${selectedIso === country.iso_a3 ? " selected" : ""}`}
+          onClick={() => onCountryClick(country.iso_a3, country.name)}
+          role="button"
+          aria-label={country.name}
+        >
+          {country.hexes.map(([col, row]) => {
+            const { x, y } = hexCenter(col, row);
+            return (
+              <polygon
+                key={`${col}-${row}`}
+                points={hexPoints(x, y, HEX_PX - 0.8)}
+                className="hex"
+              />
+            );
+          })}
+        </g>
+      ))}
     </svg>
   );
 };
