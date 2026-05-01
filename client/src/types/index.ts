@@ -4,6 +4,7 @@ export interface ArticleLite {
   countries: { code: string }[];
   url: string;
   published_at: string;
+  source: { name: string };
 }
 
 export interface PaginatedResponse<T> {

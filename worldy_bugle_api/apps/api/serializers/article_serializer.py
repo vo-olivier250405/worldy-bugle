@@ -35,4 +35,5 @@ class ArticleLiteSerializer(ArticleSerializer):
             "countries",
             "url",
             "published_at",
+            "source",
         ]

@@ -169,13 +169,19 @@ function CountrySheetArticleItem({ article }: { article: ArticleLite }) {
         {article.title}
       </p>
       <div className="flex items-center justify-between gap-2">
-        <time className="text-xs text-[#6b7280]">
-          {new Date(article.published_at).toLocaleDateString("en-GB", {
-            day: "numeric",
-            month: "short",
-            year: "numeric",
-          })}
-        </time>
+        <div className="flex items-center gap-1.5 min-w-0">
+          <time className="shrink-0 text-xs text-[#6b7280]">
+            {new Date(article.published_at).toLocaleDateString("en-GB", {
+              day: "numeric",
+              month: "short",
+              year: "numeric",
+            })}
+          </time>
+          <span className="text-[#2e303a]">·</span>
+          <span className="truncate text-xs text-[#6b7280]">
+            {article.source.name}
+          </span>
+        </div>
         <ExternalLink
           size={11}
           className="shrink-0 text-[#6b7280] opacity-0 transition-opacity group-hover:opacity-100"
