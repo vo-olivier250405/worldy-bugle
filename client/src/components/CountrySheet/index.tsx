@@ -1,4 +1,4 @@
-import { createContext, useContext, useMemo } from "react";
+import { createContext, useContext, useMemo, useRef, useEffect } from "react";
 import type { ReactNode } from "react";
 import { X, ExternalLink, Newspaper } from "lucide-react";
 import { useCountryArticles } from "@/hooks/useArticles";
@@ -21,6 +21,9 @@ interface CountrySheetContextValue {
   count: number;
   isLoading: boolean;
   isError: boolean;
+  hasNextPage: boolean;
+  isFetchingNextPage: boolean;
+  fetchNextPage: () => void;
   onClose: () => void;
 }
 
@@ -50,19 +53,29 @@ function CountrySheetRoot({
   onClose,
   children,
 }: CountrySheetProps) {
-  const { data, isLoading, isError } = useCountryArticles(iso);
+  const {
+    data,
+    isLoading,
+    isError,
+    hasNextPage,
+    isFetchingNextPage,
+    fetchNextPage,
+  } = useCountryArticles(iso);
 
   const value = useMemo<CountrySheetContextValue>(
     () => ({
       iso,
       countryName,
-      articles: data?.data ?? [],
-      count: data?.count ?? 0,
+      articles: data?.pages.flatMap((p) => p.data) ?? [],
+      count: data?.pages[0]?.count ?? 0,
       isLoading,
       isError,
+      hasNextPage: hasNextPage ?? false,
+      isFetchingNextPage,
+      fetchNextPage: () => { void fetchNextPage(); },
       onClose,
     }),
-    [iso, countryName, data, isLoading, isError, onClose],
+    [iso, countryName, data, isLoading, isError, hasNextPage, isFetchingNextPage, fetchNextPage, onClose],
   );
 
   return (
@@ -105,7 +118,24 @@ function CountrySheetHeader() {
 }
 
 function CountrySheetArticleList() {
-  const { articles, isLoading, isError } = useCountrySheetContext();
+  const { articles, isLoading, isError, hasNextPage, isFetchingNextPage, fetchNextPage } =
+    useCountrySheetContext();
+
+  const sentinelRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = sentinelRef.current;
+    if (!el || !hasNextPage) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) fetchNextPage();
+      },
+      { threshold: 0.1 },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [hasNextPage, fetchNextPage]);
 
   if (isLoading) {
     return (
@@ -141,6 +171,13 @@ function CountrySheetArticleList() {
           {articles.map((article) => (
             <CountrySheetArticleItem key={article.id} article={article} />
           ))}
+          <div ref={sentinelRef} className="h-1" />
+          {isFetchingNextPage && (
+            <>
+              <Skeleton className="h-[72px] w-full" />
+              <Skeleton className="h-[72px] w-full" />
+            </>
+          )}
         </div>
       </ScrollArea>
     </div>
@@ -153,7 +190,7 @@ function CountrySheetArticleItem({ article }: { article: ArticleLite }) {
       href={article.url}
       target="_blank"
       rel="noreferrer"
-      className="group flex flex-col gap-1.5 rounded-lg border border-border bg-card p-3.5 transition-all hover:border-primary-soft hover:bg-card-hover"
+      className="group flex flex-col gap-1.5 rounded-sm border border-border bg-card p-3.5 transition-all hover:border-primary-soft hover:bg-card-hover"
     >
       <p className="line-clamp-3 text-sm font-medium leading-snug text-heading">
         {article.title}

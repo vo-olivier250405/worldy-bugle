@@ -1,10 +1,15 @@
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { articlesApi } from "@/api/articles";
 
 export function useCountryArticles(iso: string | null) {
-  return useQuery({
+  return useInfiniteQuery({
     queryKey: ["articles", iso],
-    queryFn: () => articlesApi.list(iso!),
+    queryFn: ({ pageParam }) => articlesApi.list(iso!, pageParam),
+    initialPageParam: 1,
+    getNextPageParam: (lastPage) =>
+      lastPage.pager.current < lastPage.pager.total
+        ? lastPage.pager.current + 1
+        : undefined,
     enabled: iso !== null,
     staleTime: 5 * 60 * 1000,
   });
