@@ -10,8 +10,8 @@ function Badge({ className, variant = "default", ...props }: BadgeProps) {
     <span
       className={cn(
         "inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium",
-        variant === "default" && "bg-[#2a1f45] text-[#c084fc]",
-        variant === "outline" && "border border-[#2e303a] text-[#9ca3af]",
+        variant === "default" && "bg-[#ede9fe] text-[#7c3aed]",
+        variant === "outline" && "border border-[#e4dff5] text-[#9791a8]",
         className,
       )}
       {...props}

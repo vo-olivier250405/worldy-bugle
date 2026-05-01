@@ -26,12 +26,7 @@ function App() {
   const handleClose = useCallback(() => setSelected(null), []);
 
   const handleCountryHover = useCallback(
-    (
-      iso: string | null,
-      name: string | null,
-      x: number,
-      y: number,
-    ) => {
+    (iso: string | null, name: string | null, x: number, y: number) => {
       if (iso && name) {
         setTooltip({ iso, name, x, y });
       } else {
@@ -47,7 +42,7 @@ function App() {
         display: "flex",
         flexDirection: "column",
         height: "100svh",
-        backgroundColor: "#16171d",
+        backgroundColor: "#f7f5ff",
       }}
     >
       {/* Header */}
@@ -59,7 +54,7 @@ function App() {
           padding: "0 24px",
           height: "52px",
           flexShrink: 0,
-          borderBottom: "1px solid #2e303a",
+          borderBottom: "1px solid #e4dff5",
         }}
       >
         <span
@@ -67,23 +62,11 @@ function App() {
             fontSize: "14px",
             fontWeight: 600,
             letterSpacing: "0.1em",
-            color: "#f3f4f6",
+            color: "#1e1b2e",
             textTransform: "uppercase",
           }}
         >
           Worldy Bugle
-        </span>
-        <span
-          style={{
-            fontSize: "10px",
-            fontWeight: 500,
-            letterSpacing: "0.18em",
-            color: "#c084fc",
-            textTransform: "uppercase",
-            opacity: 0.75,
-          }}
-        >
-          Geopolitical Intelligence
         </span>
       </header>
 

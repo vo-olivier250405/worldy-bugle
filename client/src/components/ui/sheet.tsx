@@ -31,7 +31,7 @@ function SheetContent({
           "fixed inset-y-0 right-0 z-50",
           "flex flex-col",
           "w-[420px] max-w-full",
-          "border-l border-[#2e303a] bg-[#16171d]",
+          "border-l border-[#e4dff5] bg-[#ffffff]",
           "shadow-2xl focus:outline-none",
           className,
         )}
@@ -46,7 +46,7 @@ function SheetContent({
 function SheetHeader({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
   return (
     <div
-      className={cn("shrink-0 px-5 py-4 border-b border-[#2e303a]", className)}
+      className={cn("shrink-0 px-5 py-4 border-b border-[#e4dff5]", className)}
       {...props}
     />
   );
@@ -58,7 +58,7 @@ function SheetTitle({
 }: ComponentPropsWithoutRef<typeof DialogPrimitive.Title>) {
   return (
     <DialogPrimitive.Title
-      className={cn("text-lg font-semibold text-[#f3f4f6]", className)}
+      className={cn("text-lg font-semibold text-[#1e1b2e]", className)}
       {...props}
     />
   );

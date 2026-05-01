@@ -99,7 +99,7 @@ function CountrySheetHeader() {
         <button
           onClick={onClose}
           aria-label="Close"
-          className="mt-0.5 rounded p-1 text-[#6b7280] transition-colors hover:bg-[#25262f] hover:text-[#f3f4f6]"
+          className="mt-0.5 rounded p-1 text-[#9791a8] transition-colors hover:bg-[#f3f0fd] hover:text-[#1e1b2e]"
         >
           <X size={15} />
         </button>
@@ -126,7 +126,7 @@ function CountrySheetArticleList() {
   if (isError) {
     return (
       <div className="flex flex-col items-center justify-center gap-2 p-8 text-center">
-        <p className="text-sm text-[#9ca3af]">Failed to load articles.</p>
+        <p className="text-sm text-[#6b6375]">Failed to load articles.</p>
       </div>
     );
   }
@@ -134,8 +134,8 @@ function CountrySheetArticleList() {
   if (articles.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center gap-3 p-8 text-center">
-        <Newspaper size={32} className="text-[#2e303a]" />
-        <p className="text-sm text-[#6b7280]">
+        <Newspaper size={32} className="text-[#c4b5fd]" />
+        <p className="text-sm text-[#9791a8]">
           No articles for this country yet.
         </p>
       </div>
@@ -163,28 +163,28 @@ function CountrySheetArticleItem({ article }: { article: ArticleLite }) {
       href={article.url}
       target="_blank"
       rel="noreferrer"
-      className="group flex flex-col gap-1.5 rounded-lg border border-[#2e303a] bg-[#1f2028] p-3.5 transition-all hover:border-[#c084fc]/30 hover:bg-[#25262f]"
+      className="group flex flex-col gap-1.5 rounded-lg border border-[#e4dff5] bg-[#faf8ff] p-3.5 transition-all hover:border-[#c4b5fd] hover:bg-[#f3f0fd]"
     >
-      <p className="line-clamp-3 text-sm font-medium leading-snug text-[#f3f4f6]">
+      <p className="line-clamp-3 text-sm font-medium leading-snug text-[#1e1b2e]">
         {article.title}
       </p>
       <div className="flex items-center justify-between gap-2">
         <div className="flex items-center gap-1.5 min-w-0">
-          <time className="shrink-0 text-xs text-[#6b7280]">
+          <time className="shrink-0 text-xs text-[#9791a8]">
             {new Date(article.published_at).toLocaleDateString("en-GB", {
               day: "numeric",
               month: "short",
               year: "numeric",
             })}
           </time>
-          <span className="text-[#2e303a]">·</span>
-          <span className="truncate text-xs text-[#6b7280]">
+          <span className="text-[#d8d0f0]">·</span>
+          <span className="truncate text-xs text-[#9791a8]">
             {article.source.name}
           </span>
         </div>
         <ExternalLink
           size={11}
-          className="shrink-0 text-[#6b7280] opacity-0 transition-opacity group-hover:opacity-100"
+          className="shrink-0 text-[#9791a8] opacity-0 transition-opacity group-hover:opacity-100"
         />
       </div>
     </a>

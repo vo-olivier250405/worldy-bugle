@@ -1,14 +1,14 @@
 @import "tailwindcss";
 
 :root {
-  --text: #9ca3af;
-  --text-h: #f3f4f6;
-  --bg: #16171d;
-  --surface: #1f2028;
-  --surface-elevated: #25262f;
-  --border: #2e303a;
-  --accent: #c084fc;
-  --accent-bg: rgba(192, 132, 252, 0.12);
+  --text: #6b6375;
+  --text-h: #1e1b2e;
+  --bg: #f7f5ff;
+  --surface: #ffffff;
+  --surface-elevated: #f3f0fd;
+  --border: #e4dff5;
+  --accent: #7c3aed;
+  --accent-bg: rgba(124, 58, 237, 0.08);
 }
 
 html,
@@ -42,23 +42,33 @@ body,
 
 /* ─── SVG Map ────────────────────────────────────────────── */
 .hex {
-  fill: #1c1d24;
-  stroke: #16171d;
-  stroke-width: 0.7;
+  fill: #c4b5fd;
+  stroke: #f7f5ff;
+  stroke-width: 0.8;
   transition: fill 120ms ease;
 }
 
 .country-group {
   cursor: pointer;
+  filter: drop-shadow(1px 3px 2px rgba(109, 40, 217, 0.13));
+  transition: filter 150ms ease;
+}
+
+.country-group:hover {
+  filter: drop-shadow(1px 4px 5px rgba(109, 40, 217, 0.28));
 }
 
 .country-group:hover .hex {
-  fill: #252630;
+  fill: #a78bfa;
+}
+
+.country-group.selected {
+  filter: drop-shadow(1px 4px 6px rgba(109, 40, 217, 0.42));
 }
 
 .country-group.selected .hex {
-  fill: #6d28d9;
-  stroke: #7c3aed;
+  fill: #7c3aed;
+  stroke: #6d28d9;
 }
 
 /* ─── Sheet Animations ───────────────────────────────────── */

@@ -18,9 +18,9 @@ function MapTooltip({ iso, name, x, y }: MapTooltipProps) {
       <div
         className="flex items-center gap-2 rounded-md px-2.5 py-1.5 shadow-xl"
         style={{
-          backgroundColor: "#1f2028",
-          border: "1px solid #2e303a",
-          backdropFilter: "blur(4px)",
+          backgroundColor: "#ffffff",
+          border: "1px solid #e4dff5",
+          boxShadow: "0 4px 12px rgba(109, 40, 217, 0.1)",
         }}
       >
         <span className="text-base leading-none" aria-hidden>
@@ -28,7 +28,7 @@ function MapTooltip({ iso, name, x, y }: MapTooltipProps) {
         </span>
         <span
           className="whitespace-nowrap text-xs font-medium"
-          style={{ color: "#f3f4f6" }}
+          style={{ color: "#1e1b2e" }}
         >
           {name}
         </span>
