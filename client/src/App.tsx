@@ -37,50 +37,14 @@ function App() {
   );
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        height: "100svh",
-        backgroundColor: "#f7f5ff",
-      }}
-    >
-      {/* Header */}
-      <header
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: "12px",
-          padding: "0 24px",
-          height: "52px",
-          flexShrink: 0,
-          borderBottom: "1px solid #e4dff5",
-        }}
-      >
-        <span
-          style={{
-            fontSize: "14px",
-            fontWeight: 600,
-            letterSpacing: "0.1em",
-            color: "#1e1b2e",
-            textTransform: "uppercase",
-          }}
-        >
+    <div className="flex h-svh flex-col bg-background">
+      <header className="flex h-13 shrink-0 items-center px-6 border-b border-border bg-surface">
+        <span className="text-sm font-semibold uppercase tracking-widest text-heading">
           Worldy Bugle
         </span>
       </header>
 
-      {/* Map */}
-      <main
-        style={{
-          flex: 1,
-          overflow: "hidden",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          padding: "24px",
-        }}
-      >
+      <main className="flex flex-1 items-center justify-center overflow-hidden p-6">
         <WorldMap
           selectedIso={selected?.iso ?? null}
           onCountryClick={handleCountryClick}
@@ -88,7 +52,6 @@ function App() {
         />
       </main>
 
-      {/* Tooltip */}
       {tooltip && (
         <MapTooltip
           iso={tooltip.iso}
@@ -98,7 +61,6 @@ function App() {
         />
       )}
 
-      {/* Side sheet */}
       <CountrySheet
         iso={selected?.iso ?? null}
         countryName={selected?.name ?? null}

@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 function Skeleton({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
   return (
     <div
-      className={cn("animate-pulse rounded-lg bg-[#ede9fe]", className)}
+      className={cn("animate-pulse rounded-lg bg-primary-light", className)}
       {...props}
     />
   );

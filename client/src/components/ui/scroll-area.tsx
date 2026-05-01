@@ -22,7 +22,7 @@ function ScrollBar({
       )}
       {...props}
     >
-      <ScrollAreaPrimitive.ScrollAreaThumb className="relative flex-1 rounded-full bg-[#d8d0f0]" />
+      <ScrollAreaPrimitive.ScrollAreaThumb className="relative flex-1 rounded-full bg-separator" />
     </ScrollAreaPrimitive.ScrollAreaScrollbar>
   );
 }

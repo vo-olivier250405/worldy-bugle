@@ -14,8 +14,6 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 
-// ─── Context ──────────────────────────────────────────────
-
 interface CountrySheetContextValue {
   iso: string | null;
   countryName: string | null;
@@ -38,8 +36,6 @@ function useCountrySheetContext() {
     );
   return ctx;
 }
-
-// ─── Root ─────────────────────────────────────────────────
 
 interface CountrySheetProps {
   iso: string | null;
@@ -78,14 +74,14 @@ function CountrySheetRoot({
   );
 }
 
-// ─── Header ───────────────────────────────────────────────
-
 function CountrySheetHeader() {
   const { countryName, count, isLoading, onClose } = useCountrySheetContext();
 
   return (
     <SheetHeader>
-      <SheetDescription>Articles for {countryName ?? "this country"}</SheetDescription>
+      <SheetDescription>
+        Articles for {countryName ?? "this country"}
+      </SheetDescription>
       <div className="flex items-start justify-between gap-3">
         <div className="flex flex-col gap-2">
           <SheetTitle>{countryName ?? "Country"}</SheetTitle>
@@ -99,7 +95,7 @@ function CountrySheetHeader() {
         <button
           onClick={onClose}
           aria-label="Close"
-          className="mt-0.5 rounded p-1 text-[#9791a8] transition-colors hover:bg-[#f3f0fd] hover:text-[#1e1b2e]"
+          className="mt-0.5 rounded p-1 text-muted transition-colors hover:bg-card-hover hover:text-heading"
         >
           <X size={15} />
         </button>
@@ -107,8 +103,6 @@ function CountrySheetHeader() {
     </SheetHeader>
   );
 }
-
-// ─── ArticleList ──────────────────────────────────────────
 
 function CountrySheetArticleList() {
   const { articles, isLoading, isError } = useCountrySheetContext();
@@ -126,7 +120,7 @@ function CountrySheetArticleList() {
   if (isError) {
     return (
       <div className="flex flex-col items-center justify-center gap-2 p-8 text-center">
-        <p className="text-sm text-[#6b6375]">Failed to load articles.</p>
+        <p className="text-sm text-body">Failed to load articles.</p>
       </div>
     );
   }
@@ -134,10 +128,8 @@ function CountrySheetArticleList() {
   if (articles.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center gap-3 p-8 text-center">
-        <Newspaper size={32} className="text-[#c4b5fd]" />
-        <p className="text-sm text-[#9791a8]">
-          No articles for this country yet.
-        </p>
+        <Newspaper size={32} className="text-primary-soft" />
+        <p className="text-sm text-muted">No articles for this country yet.</p>
       </div>
     );
   }
@@ -155,43 +147,39 @@ function CountrySheetArticleList() {
   );
 }
 
-// ─── ArticleItem ──────────────────────────────────────────
-
 function CountrySheetArticleItem({ article }: { article: ArticleLite }) {
   return (
     <a
       href={article.url}
       target="_blank"
       rel="noreferrer"
-      className="group flex flex-col gap-1.5 rounded-lg border border-[#e4dff5] bg-[#faf8ff] p-3.5 transition-all hover:border-[#c4b5fd] hover:bg-[#f3f0fd]"
+      className="group flex flex-col gap-1.5 rounded-lg border border-border bg-card p-3.5 transition-all hover:border-primary-soft hover:bg-card-hover"
     >
-      <p className="line-clamp-3 text-sm font-medium leading-snug text-[#1e1b2e]">
+      <p className="line-clamp-3 text-sm font-medium leading-snug text-heading">
         {article.title}
       </p>
       <div className="flex items-center justify-between gap-2">
         <div className="flex items-center gap-1.5 min-w-0">
-          <time className="shrink-0 text-xs text-[#9791a8]">
+          <time className="shrink-0 text-xs text-muted">
             {new Date(article.published_at).toLocaleDateString("en-GB", {
               day: "numeric",
               month: "short",
               year: "numeric",
             })}
           </time>
-          <span className="text-[#d8d0f0]">·</span>
-          <span className="truncate text-xs text-[#9791a8]">
+          <span className="text-separator">·</span>
+          <span className="truncate text-xs text-muted">
             {article.source.name}
           </span>
         </div>
         <ExternalLink
           size={11}
-          className="shrink-0 text-[#9791a8] opacity-0 transition-opacity group-hover:opacity-100"
+          className="shrink-0 text-muted opacity-0 transition-opacity group-hover:opacity-100"
         />
       </div>
     </a>
   );
 }
-
-// ─── Compound export ──────────────────────────────────────
 
 type CountrySheetComponent = typeof CountrySheetRoot & {
   Header: typeof CountrySheetHeader;
