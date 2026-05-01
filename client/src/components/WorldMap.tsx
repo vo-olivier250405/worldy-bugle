@@ -1,9 +1,15 @@
-import type { FC } from "react";
+import type { FC, MouseEvent } from "react";
 import worldData from "../assets/world.json";
 
 interface WorldMapProps {
   selectedIso: string | null;
   onCountryClick: (iso: string, name: string) => void;
+  onCountryHover: (
+    iso: string | null,
+    name: string | null,
+    x: number,
+    y: number,
+  ) => void;
 }
 
 const HEX_PX = 6.5;
@@ -28,16 +34,38 @@ function hexPoints(cx: number, cy: number, r: number) {
   }).join(" ");
 }
 
-const WorldMap: FC<WorldMapProps> = ({ selectedIso, onCountryClick }) => {
+const WorldMap: FC<WorldMapProps> = ({
+  selectedIso,
+  onCountryClick,
+  onCountryHover,
+}) => {
+  function handleMouseMove(e: MouseEvent<SVGSVGElement>) {
+    const g = (e.target as Element).closest("g[data-iso]");
+    if (g) {
+      onCountryHover(
+        g.getAttribute("data-iso"),
+        g.getAttribute("data-name"),
+        e.clientX,
+        e.clientY,
+      );
+    } else {
+      onCountryHover(null, null, 0, 0);
+    }
+  }
+
   return (
     <svg
       viewBox="0 0 1960 910"
       preserveAspectRatio="xMidYMid meet"
       style={{ width: "100%", height: "100%", minWidth: "600px" }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={() => onCountryHover(null, null, 0, 0)}
     >
       {worldData.map((country) => (
         <g
           key={country.iso_a3}
+          data-iso={country.iso_a3}
+          data-name={country.name}
           className={`country-group${selectedIso === country.iso_a3 ? " selected" : ""}`}
           onClick={() => onCountryClick(country.iso_a3, country.name)}
           role="button"

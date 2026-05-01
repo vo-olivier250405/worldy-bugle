@@ -1,20 +1,45 @@
 import { useState, useCallback } from "react";
 import WorldMap from "./components/WorldMap";
 import { CountrySheet } from "./components/CountrySheet";
+import { MapTooltip } from "./components/MapTooltip";
 
 interface SelectedCountry {
   iso: string;
   name: string;
 }
 
+interface TooltipState {
+  iso: string;
+  name: string;
+  x: number;
+  y: number;
+}
+
 function App() {
   const [selected, setSelected] = useState<SelectedCountry | null>(null);
+  const [tooltip, setTooltip] = useState<TooltipState | null>(null);
 
   const handleCountryClick = useCallback((iso: string, name: string) => {
     setSelected({ iso, name });
   }, []);
 
   const handleClose = useCallback(() => setSelected(null), []);
+
+  const handleCountryHover = useCallback(
+    (
+      iso: string | null,
+      name: string | null,
+      x: number,
+      y: number,
+    ) => {
+      if (iso && name) {
+        setTooltip({ iso, name, x, y });
+      } else {
+        setTooltip(null);
+      }
+    },
+    [],
+  );
 
   return (
     <div
@@ -76,8 +101,19 @@ function App() {
         <WorldMap
           selectedIso={selected?.iso ?? null}
           onCountryClick={handleCountryClick}
+          onCountryHover={handleCountryHover}
         />
       </main>
+
+      {/* Tooltip */}
+      {tooltip && (
+        <MapTooltip
+          iso={tooltip.iso}
+          name={tooltip.name}
+          x={tooltip.x}
+          y={tooltip.y}
+        />
+      )}
 
       {/* Side sheet */}
       <CountrySheet
