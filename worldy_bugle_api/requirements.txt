@@ -28,6 +28,9 @@ spacy
 pycountry
 pycountry-convert
 geograpy3
+shapely
+geopandas
+topojson
 nltk
 
 
